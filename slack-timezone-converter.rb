@@ -29,7 +29,6 @@ http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 response = http.get(uri.request_uri)
-CURRENT_USER = JSON.parse(response.body)['user_id']
 
 # Get users list and all available timezones and set default timezone
 
@@ -56,11 +55,9 @@ end
 
 timezones = timezones.sort_by{ |key, value| value }
 
-Time.zone = users[CURRENT_USER][:tz]
-
 # Connect to Slack
 
-url = SlackRTM.get_url token: TOKEN 
+url = SlackRTM.get_url token: TOKEN
 client = SlackRTM::Client.new websocket_url: url
 
 # Listen for new messages (events of type "message")
@@ -70,7 +67,7 @@ puts "[#{Time.now}] Connected to Slack!"
 client.on :message do |data|
   if data['type'] === 'message' and !data['text'].nil? and data['subtype'].nil? and data['reply_to'].nil? and data['text'].include?("@time") and
      !data['text'].gsub(/<[^>]+>/, '').match(/[0-9](([hH]([0123456789 ?:,;.]|$))|( ?[aA][mM])|( ?[pP][mM])|(:[0-9]{2}))/).nil?
-    
+
     # Identify time patterns
     begin
       Time.zone = users[data['user']][:tz]
