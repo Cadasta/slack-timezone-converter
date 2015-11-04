@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'active_support/all'
 require 'json'
+require 'daemons'
 Bundler.require
 
 TOKEN = ARGV[0]         # Get one at https://api.slack.com/web#basics
@@ -98,5 +99,6 @@ end
 
 # Runs forever until an exception happens or the process is stopped/killed
 
+Daemons.daemonize
 client.main_loop
 assert false
