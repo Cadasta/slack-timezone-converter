@@ -42,7 +42,7 @@ users = {}
 
 JSON.parse(response.body)['members'].each do |user|
   offset, label = user['tz_offset'], user['tz']
-  next if offset.nil? or offset == 0 or label.nil? or user['deleted']
+  next if offset.nil? or label.nil? or user['deleted']
   label = ActiveSupport::TimeZone.find_tzinfo(label).current_period.abbreviation.to_s
   offset /= 3600
   if key = timezones.key(offset) and !key.split(' / ').include?(label)
