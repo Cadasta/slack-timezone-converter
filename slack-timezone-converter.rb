@@ -99,6 +99,6 @@ end
 
 # Runs forever until an exception happens or the process is stopped/killed
 
-Daemons.daemonize
+Process.daemon
 client.main_loop
 assert false
