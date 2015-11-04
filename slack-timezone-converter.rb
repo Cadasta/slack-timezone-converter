@@ -2,7 +2,6 @@ require 'rubygems'
 require 'bundler/setup'
 require 'active_support/all'
 require 'json'
-require 'daemons'
 Bundler.require
 
 TOKEN = ARGV[0] || IO.read('slack-api-token.txt') # Get one at https://api.slack.com/web#basics
