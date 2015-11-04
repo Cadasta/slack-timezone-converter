@@ -5,7 +5,7 @@ require 'json'
 require 'daemons'
 Bundler.require
 
-TOKEN = ARGV[0]         # Get one at https://api.slack.com/web#basics
+TOKEN = ARGV[0] || IO.read('slack-api-token.txt') # Get one at https://api.slack.com/web#basics
 PER_LINE = ARGV[1] || 1 # Number of times per line
 MESSAGE = ARGV[2].to_s  # Additional message to be appended
 
